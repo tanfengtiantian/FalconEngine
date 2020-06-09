@@ -1,24 +1,20 @@
 package store
 
 import (
-	"os"
-	"github.com/FalconEngine/mlog"
+	"FalconEngine/mlog"
 	"encoding/binary"
+	"os"
 )
 
 type FalconSearchFileStoreWriter struct {
-
-	fullName string
+	fullName  string
 	fileStore *os.File
-	name string
-
-
+	name      string
 }
-
 
 func NewFalconSearchFileStoreWriter(setting *FalconSearchStoreSetting) *FalconSearchFileStoreWriter {
 	var err error
-	fsw := &FalconSearchFileStoreWriter{fullName:setting.Location + "/" + setting.Name,name:setting.Name}
+	fsw := &FalconSearchFileStoreWriter{fullName: setting.Location + "/" + setting.Name, name: setting.Name}
 	fsw.fileStore, err = os.Create(fsw.fullName)
 	if err != nil {
 		mlog.Error("create %s error : %v", fsw.fullName, err)
@@ -26,9 +22,7 @@ func NewFalconSearchFileStoreWriter(setting *FalconSearchStoreSetting) *FalconSe
 	}
 	return fsw
 
-
 }
-
 
 func (fsw *FalconSearchFileStoreWriter) Write(p []byte) (n int, err error) {
 
@@ -37,8 +31,7 @@ func (fsw *FalconSearchFileStoreWriter) Write(p []byte) (n int, err error) {
 		mlog.Error("Write Error ... %v", err)
 		return -1, err
 	}
-	return count,nil
-
+	return count, nil
 
 }
 
@@ -56,18 +49,17 @@ func (fsw *FalconSearchFileStoreWriter) WriteInt64(val int64) error {
 }
 
 func (fsw *FalconSearchFileStoreWriter) WriteUVarInt(val uint64) error {
-	bytes := make([]byte,binary.MaxVarintLen64)
-	n:=binary.PutUvarint(bytes,val)
-	_,err:=fsw.Write(bytes[:n+1])
+	bytes := make([]byte, binary.MaxVarintLen64)
+	n := binary.PutUvarint(bytes, val)
+	_, err := fsw.Write(bytes[:n+1])
 	return err
-
 
 }
 
 func (fsw *FalconSearchFileStoreWriter) WriteVarInt(val int64) error {
-	bytes := make([]byte,binary.MaxVarintLen64)
-	n:=binary.PutVarint(bytes,val)
-	_,err:=fsw.Write(bytes[:n+1])
+	bytes := make([]byte, binary.MaxVarintLen64)
+	n := binary.PutVarint(bytes, val)
+	_, err := fsw.Write(bytes[:n+1])
 	return err
 
 }
@@ -85,7 +77,3 @@ func (fsw *FalconSearchFileStoreWriter) Name() string {
 	return fsw.name
 
 }
-
-
-
-

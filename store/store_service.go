@@ -9,17 +9,15 @@
 package store
 
 import (
-	"github.com/FalconEngine/util"
+	"FalconEngine/util"
 )
-
 
 // 存储setting接口
 type FalconSearchStoreSetting struct {
 	Location string
-	Name string
-	Type string
+	Name     string
+	Type     string
 }
-
 
 // 二进制写入
 type FalconSearchStoreWriteService interface {
@@ -32,7 +30,6 @@ type FalconSearchStoreReadService interface {
 	util.FalconRandomReader
 }
 
-
 func CreateFalconSearchStoreWriteService(setting *FalconSearchStoreSetting) FalconSearchStoreWriteService {
 
 	switch setting.Type {
@@ -43,7 +40,6 @@ func CreateFalconSearchStoreWriteService(setting *FalconSearchStoreSetting) Falc
 	}
 
 }
-
 
 func NewFalconSearchStoreReadService(name string) FalconSearchStoreReadService {
 	return NewFalconSearchFileMMapStore(name)

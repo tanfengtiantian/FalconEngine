@@ -1,16 +1,16 @@
 package main
 
 import (
+	"FalconEngine/src/utils"
 	"flag"
 	"fmt"
 	_ "net/http/pprof"
 	"runtime"
 	//"runtime/debug"
 	//"tree"
-	fd "FalconDispatcher"
-	fe "FalconEngine"
-	fs "FalconService"
-	"utils"
+	fd "FalconEngine/src/FalconDispatcher"
+	fe "FalconEngine/src/FalconEngine"
+	fs "FalconEngine/src/FalconService"
 )
 
 func main() {

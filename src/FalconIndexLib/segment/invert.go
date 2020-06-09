@@ -10,14 +10,14 @@
 package segment
 
 import (
+	"FalconEngine/src/tree"
+	"FalconEngine/src/utils"
 	"bytes"
 	"encoding/binary"
 	"errors"
 	"fmt"
 	"os"
 	"strings"
-	"tree"
-	"utils"
 )
 
 /************************************************************************

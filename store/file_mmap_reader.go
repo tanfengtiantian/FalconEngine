@@ -1,11 +1,11 @@
 package store
 
 import (
-	"github.com/FalconEngine/mlog"
+	"FalconEngine/mlog"
+	"FalconEngine/util"
+	"fmt"
 	"os"
 	"syscall"
-	"github.com/FalconEngine/util"
-	"fmt"
 )
 
 type FalconSearchFileMMapReader struct {
@@ -14,10 +14,7 @@ type FalconSearchFileMMapReader struct {
 	fileStore *os.File
 	mmapBytes []byte
 	maxLength int64
-
-
 }
-
 
 func NewFalconSearchFileMMapReader(setting FalconSearchStoreSetting) *FalconSearchFileMMapReader {
 
@@ -50,16 +47,14 @@ func NewFalconSearchFileMMapReader(setting FalconSearchStoreSetting) *FalconSear
 	return fms
 }
 
-
-func (fms *FalconSearchFileMMapReader) readByte(offset int64) (byte,error) {
-	if offset>=fms.maxLength {
-		return 'a',fmt.Errorf("error")
+func (fms *FalconSearchFileMMapReader) readByte(offset int64) (byte, error) {
+	if offset >= fms.maxLength {
+		return 'a', fmt.Errorf("error")
 	}
 
-	return fms.mmapBytes[offset],nil
+	return fms.mmapBytes[offset], nil
 
 }
-
 
 func (fms *FalconSearchFileMMapReader) ReadUint64(offset int64) (uint64, error) {
 

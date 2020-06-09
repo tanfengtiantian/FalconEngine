@@ -1,13 +1,13 @@
 package store
 
 import (
-	"github.com/FalconEngine/message"
-	"github.com/FalconEngine/mlog"
-	"os"
-	"encoding/binary"
+	"FalconEngine/message"
+	"FalconEngine/mlog"
 	"bufio"
+	"encoding/binary"
 	"fmt"
 	"io"
+	"os"
 )
 
 type FalconSearchFileStore struct {
@@ -63,16 +63,14 @@ func NewFalconFileStoreReadService(name string) FalconSearchStoreReadService {
 //
 //}
 
+func (fms *FalconSearchFileStore) ReadFullBytes(offset int64, lens int64) ([]byte, error) {
 
-func (fms *FalconSearchFileStore) ReadFullBytes(offset int64,lens int64) ([]byte,error){
-
-
-	return nil,fmt.Errorf("FalconSearchFileStore length is out of range")
+	return nil, fmt.Errorf("FalconSearchFileStore length is out of range")
 }
 
 func (sw *FalconSearchFileStore) ReadFullBytesAt(offset int64, details []byte) error {
 
-	sw.storer.Seek(offset,0)
+	sw.storer.Seek(offset, 0)
 	//res,err := sw.reader.Peek(len(details))
 	//mlog.Info("err %v",err)
 	//copy(details,res)
@@ -157,17 +155,16 @@ func (sw *FalconSearchFileStore) Destroy() error {
 	return os.RemoveAll(sw.name)
 }
 
-
-func (sw *FalconSearchFileStore) AppendUint64(val uint64) error{
-	bytes := make([]byte,binary.MaxVarintLen64)
-	n:=binary.PutUvarint(bytes,val)
+func (sw *FalconSearchFileStore) AppendUint64(val uint64) error {
+	bytes := make([]byte, binary.MaxVarintLen64)
+	n := binary.PutUvarint(bytes, val)
 	sw.AppendBytes(bytes[:n+1])
 	return nil
 }
-func (sw *FalconSearchFileStore) AppendInt64(val int64) error{
+func (sw *FalconSearchFileStore) AppendInt64(val int64) error {
 
-	bytes := make([]byte,binary.MaxVarintLen64)
-	n:=binary.PutVarint(bytes,val)
+	bytes := make([]byte, binary.MaxVarintLen64)
+	n := binary.PutVarint(bytes, val)
 	sw.AppendBytes(bytes[:n+1])
 	return nil
-	}
+}

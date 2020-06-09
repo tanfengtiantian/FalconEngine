@@ -10,6 +10,7 @@
 package FalconDispatcher
 
 import (
+	"FalconEngine/src/utils"
 	"bufio"
 	"encoding/json"
 	"errors"
@@ -19,7 +20,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"utils"
 )
 
 const (

@@ -10,6 +10,7 @@
 package segment
 
 import (
+	"FalconEngine/src/utils"
 	"encoding/binary"
 	"errors"
 	"fmt"
@@ -17,7 +18,6 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
-	"utils"
 )
 
 //profile 正排索引，detail也是保存在这里

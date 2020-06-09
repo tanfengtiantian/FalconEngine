@@ -1,14 +1,12 @@
 package invert
 
 import (
+	"FalconEngine/message"
+	"FalconEngine/mlog"
 	"encoding/binary"
 	"fmt"
 	"strings"
-	"github.com/FalconEngine/mlog"
-	"github.com/FalconEngine/message"
 )
-
-
 
 type MemoryFalconDocList struct {
 	docList []*message.DocId
@@ -36,7 +34,7 @@ func (mfd *MemoryFalconDocList) GetDoc(idx int) (*message.DocId, error) {
 
 func (mfd *MemoryFalconDocList) Push(docid *message.DocId) error {
 
-	if mfd.length>0 && docid.DocID <= mfd.docList[mfd.length-1].DocID {
+	if mfd.length > 0 && docid.DocID <= mfd.docList[mfd.length-1].DocID {
 		mlog.Error("Doc Id [ %d ] is wrong,max id is : [ %d ]", docid.DocID, mfd.docList[mfd.length-1].DocID)
 		return fmt.Errorf("Doc Id [ %d ] is wrong,max id is : [ %d ]", docid.DocID, mfd.docList[mfd.length-1].DocID)
 	}
@@ -49,9 +47,9 @@ func (mfd *MemoryFalconDocList) Push(docid *message.DocId) error {
 
 func (mfd *MemoryFalconDocList) FalconEncoding() ([]byte, error) {
 
-	lens := mfd.length*8
+	lens := mfd.length * 8
 	bytes := make([]byte, lens)
-	pos:=0
+	pos := 0
 	for _, docid := range mfd.docList {
 		binary.LittleEndian.PutUint32(bytes[pos:pos+4], docid.DocID)
 		binary.LittleEndian.PutUint32(bytes[pos+4:pos+8], docid.Weight)
@@ -75,18 +73,17 @@ func (mfd *MemoryFalconDocList) FalconDecoding(bytes []byte) error {
 
 func (mfd *MemoryFalconDocList) ToString() string {
 
-	result :=  fmt.Sprintf(" Doc List [ %d ]: [ ",mfd.length)
+	result := fmt.Sprintf(" Doc List [ %d ]: [ ", mfd.length)
 	max := 10
 	if mfd.length < 10 {
 		max = int(mfd.length)
 	}
 
-
-	docStrings := make([]string,0)
-	for i:=0;i<max;i++{
-		docStrings =append(docStrings, mfd.docList[i].ToString())
+	docStrings := make([]string, 0)
+	for i := 0; i < max; i++ {
+		docStrings = append(docStrings, mfd.docList[i].ToString())
 	}
-	result += strings.Join(docStrings,",")
+	result += strings.Join(docStrings, ",")
 	result += " ]"
-	return  result
+	return result
 }

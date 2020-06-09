@@ -10,14 +10,14 @@
 package FalconIndex
 
 import (
-	fis "FalconIndex/segment"
+	fis "FalconEngine/src/FalconIndexLib/segment"
+	"FalconEngine/src/tree"
+	"FalconEngine/src/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"sync"
 	"time"
-	"tree"
-	"utils"
 )
 
 type Index struct {

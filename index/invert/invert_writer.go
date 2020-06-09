@@ -1,12 +1,12 @@
 package invert
 
 import (
-	"sync"
-	"github.com/FalconEngine/store"
-	"github.com/FalconEngine/mlog"
-	"github.com/FalconEngine/index/dict"
+	"FalconEngine/index/dict"
+	"FalconEngine/message"
+	"FalconEngine/mlog"
+	"FalconEngine/store"
 	"fmt"
-	"github.com/FalconEngine/message"
+	"sync"
 )
 
 type InvertWriter struct {
@@ -33,21 +33,21 @@ func (iw *InvertWriter) Put(key string, docid *message.DocId) error {
 
 }
 
-func (iw *InvertWriter) Persistence(invertListStore,dictStore store.FalconSearchStoreWriteService) (int64,error) {
+func (iw *InvertWriter) Persistence(invertListStore, dictStore store.FalconSearchStoreWriteService) (int64, error) {
 
 	//invertListStore := store.NewFalconFileStoreWriteService(iw.path + "/" + iw.name + ".ivt")
 	//dictStore := store.NewFalconFileStoreWriteService(iw.path + "/" + iw.name + ".dic")
 	dictMap := dict.NewFalconWriteMap()
 
-	for key,v := range iw.tmpInvert {
+	for key, v := range iw.tmpInvert {
 
-		by,_:=v.FalconEncoding()
-		pos,err:=invertListStore.AppendBytes(by)
+		by, _ := v.FalconEncoding()
+		pos, err := invertListStore.AppendBytes(by)
 		if err != nil {
-			mlog.Error("Write Error : %v",err)
-			return -1,err
+			mlog.Error("Write Error : %v", err)
+			return -1, err
 		}
-		dictMap.Put(key,&message.DictValue{Offset:uint64(pos),Length:uint64(v.GetLength())})
+		dictMap.Put(key, &message.DictValue{Offset: uint64(pos), Length: uint64(v.GetLength())})
 	}
 
 	return dictMap.Persistence(dictStore)
@@ -63,12 +63,11 @@ func (iw *InvertWriter) Persistence(invertListStore,dictStore store.FalconSearch
 	//return offset,err
 }
 
-
 func (iw *InvertWriter) ToString() string {
 
 	result := "\n"
-	for key,v := range iw.tmpInvert {
-		result = result + fmt.Sprintf("[ %s ] >> %s \n",key,v.ToString())
+	for key, v := range iw.tmpInvert {
+		result = result + fmt.Sprintf("[ %s ] >> %s \n", key, v.ToString())
 	}
 	return result
 }

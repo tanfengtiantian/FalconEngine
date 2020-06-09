@@ -10,12 +10,12 @@
 package segment
 
 import (
+	"FalconEngine/src/tree"
+	"FalconEngine/src/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
-	"tree"
-	"utils"
 )
 
 // FieldInfo description: 字段的描述信息
